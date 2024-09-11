@@ -1,6 +1,7 @@
 import { User } from "../models/User.model.js";
 import bcryptjs from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
+import { sendVerificationEmail } from "../mailtrap/emials.js";
 export const signUp = async (req, res) => {
   const { email, password, name } = req.body;
 
@@ -29,6 +30,7 @@ export const signUp = async (req, res) => {
     });
     await user.save();
     generateTokenAndSetCookie(res, user._id);
+    await sendVerificationEmail(user.email, verificationToken);
     res.status(201).json({
       success: true,
       message: "user created successfully",
