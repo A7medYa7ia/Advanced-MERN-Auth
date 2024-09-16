@@ -17,7 +17,7 @@ const SignUp = () => {
 
     try {
       await signup(data);
-      navigate("/");
+      navigate("/verify-email");
     } catch (error) {
       console.log(error);
     }
